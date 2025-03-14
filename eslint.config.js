@@ -8,7 +8,11 @@ import tseslint from 'typescript-eslint'
 export default tseslint.config(
   { ignores: ['dist'] },
   {
-    extends: [js.configs.recommended, ...tseslint.configs.recommended],
+    extends: [
+      // 'prettier',
+      js.configs.recommended,
+      ...tseslint.configs.recommended,
+    ],
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
@@ -17,18 +21,23 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
-      'react-lint': reactLint
+      'react-lint': reactLint,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',
-        { allowConstantExport: true },
+        {
+          allowConstantExport: true,
+        },
       ],
-      'react-lint/self-closing-comp':["error", {
-        "component": true,
-        "html": true
-      }]
+      'react-lint/self-closing-comp': [
+        'error',
+        {
+          component: true,
+          html: true,
+        },
+      ],
     },
-  },
+  }
 )
