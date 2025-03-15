@@ -36,7 +36,7 @@ export default function TodoList() {
   }
 
   return (
-    <div className="flex gap-3 flex-col container px-2 py-4 h-[100dvh]">
+    <div className="flex gap-3 flex-col px-2 py-4 h-[100dvh] md:flex-row-reverse md:h-full">
       <Block title="Fruit" items={fruit} handleSelect={handleSelect} />
       <Block title="Vegetable" items={vegetable} handleSelect={handleSelect} />
       <Block title="Magic Box" items={current} handleSelect={handleSelect} />

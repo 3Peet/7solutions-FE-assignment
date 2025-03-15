@@ -14,7 +14,7 @@ const Block = memo(
     handleSelect: (x: dataType) => void
   }) => {
     return (
-      <Card className="h-full">
+      <Card className="h-full md:w-[400px] md:h-auto">
         <CardHeader>
           <CardTitle>{title}</CardTitle>
         </CardHeader>
