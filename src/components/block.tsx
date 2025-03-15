@@ -1,7 +1,7 @@
-import { memo } from 'react'
 import { dataType } from '@/types/data'
 import { Button } from './ui/button'
 import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
+import { memo } from 'react'
 
 const Block = memo(
   ({
@@ -23,7 +23,7 @@ const Block = memo(
             ? items.map((item) => (
                 <Button
                   variant="secondary"
-                  key={`${item.type}-${item.name}`}
+                  key={`${title}-${item.name}`}
                   onClick={() => handleSelect(item)}
                 >
                   {item.emoji} {item.name}
