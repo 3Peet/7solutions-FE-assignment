@@ -1,45 +1,85 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { foodInfo } from '@/types/food'
+import { FOOD_DATA } from '@/constants/food'
 import Block from './block'
-import { dataType } from '@/types/data'
-import { DATA } from '@/config/todo'
+
+const TIME_OUT = 5_000 // 5 seconds
+
+type categoriesType = { [x: string]: foodInfo[] }
+type timerType = { [key: string]: NodeJS.Timeout }
 
 export default function TodoList() {
-  const [current, setCurrent] = useState<dataType[]>(DATA)
-  const [fruit, setFruit] = useState<dataType[]>([])
-  const [vegetable, setVegetable] = useState<dataType[]>([])
+  const timerRef = useRef<timerType>({})
+  const [categories, setCategories] = useState<categoriesType>({
+    fruit: [],
+    vegetable: [],
+    uncategorized: FOOD_DATA,
+  })
 
-  const handleSelect = (item: dataType) => {
+  // Move items to the uncategorized box
+  const handleDelete = (item: foodInfo) => {
     const itemType = item.type.toLowerCase()
-    const isItemSelected = current.some((e) => e.name === item.name)
 
-    if (isItemSelected) {
-      // Move item from current to fruit/vegetable
-      setCurrent((prevCurrent) =>
-        prevCurrent.filter((i) => i.name !== item.name)
+    setCategories((prev) => {
+      const isAlreadyDeleted = prev.uncategorized.some(
+        (e) => e.name === item.name
       )
-      if (itemType === 'vegetable') {
-        setVegetable((prevVegetables) => [...prevVegetables, item])
-      } else if (itemType === 'fruit') {
-        setFruit((prevFruits) => [...prevFruits, item])
+
+      if (isAlreadyDeleted) {
+        clearTimeout(timerRef.current[item.name])
+        delete timerRef.current[item.name] // Clean up timer ref.
+        return prev
       }
+
+      delete timerRef.current[item.name] // Clean up timer ref.
+      return {
+        ...prev,
+        [itemType]: prev[itemType].filter((e) => e.name !== item.name),
+        uncategorized: [...prev.uncategorized, item],
+      }
+    })
+  }
+
+  // Categorize the items
+  const handleCategorize = (item: foodInfo) => {
+    const itemType = item.type.toLowerCase()
+
+    setCategories((prev) => ({
+      ...prev,
+      [itemType]: [...prev[itemType], item],
+      uncategorized: prev.uncategorized.filter((e) => e.name !== item.name),
+    }))
+
+    // Delete it after time outed.
+    timerRef.current[item.name] = setTimeout(() => {
+      handleDelete(item)
+    }, TIME_OUT)
+  }
+
+  const handleSelect = (item: foodInfo) => {
+    const isUncategorized = categories.uncategorized.some(
+      (e) => e.name === item.name
+    )
+
+    if (isUncategorized) {
+      handleCategorize(item)
     } else {
-      // Move item from fruit/vegetable back to current
-      setCurrent((prevCurrent) => [...prevCurrent, item])
-      if (itemType === 'vegetable') {
-        setVegetable((prevVegetables) =>
-          prevVegetables.filter((i) => i.name !== item.name)
-        )
-      } else if (itemType === 'fruit') {
-        setFruit((prevFruits) => prevFruits.filter((i) => i.name !== item.name))
-      }
+      handleDelete(item)
     }
   }
+
+  const { fruit, vegetable, uncategorized } = categories
 
   return (
     <div className="flex gap-3 flex-col px-2 py-4 h-[100dvh] md:flex-row-reverse md:h-full">
       <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
       <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
-      <Block name="Magic Box" items={current} handleSelect={handleSelect} />
+      <Block
+        name="Magic Box"
+        description={`The item will be categorized for ${TIME_OUT / 1000} seconds!`}
+        items={uncategorized}
+        handleSelect={handleSelect}
+      />
     </div>
   )
 }
