@@ -1,4 +1,4 @@
-export type dataType = {
+export interface foodInfo  {
   type: string
   name: string
   emoji: string

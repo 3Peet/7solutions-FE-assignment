@@ -1,4 +1,4 @@
-export const DATA = [
+export const FOOD_DATA = [
   { type: 'Fruit', name: 'Apple', emoji: '🍎' },
   { type: 'Vegetable', name: 'Broccoli', emoji: '🥦' },
   { type: 'Vegetable', name: 'Mushroom', emoji: '🍄' },
