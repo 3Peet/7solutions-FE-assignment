@@ -7,6 +7,7 @@ import {
   CardContent,
   CardDescription,
 } from './ui/card'
+import { Rabbit } from 'lucide-react'
 
 const Block = ({
   name,
@@ -27,17 +28,25 @@ const Block = ({
         <CardTitle>{name}</CardTitle>
         <CardDescription>{description}</CardDescription>
       </CardHeader>
-      <CardContent className="flex flex-wrap gap-4">
-        {items &&
-          items.map((item) => (
-            <Button
-              variant="secondary"
-              key={`${id}-${item.name.toLowerCase()}`}
-              onClick={() => handleSelect(item)}
-            >
-              {item.emoji} {item.name}
-            </Button>
-          ))}
+      <CardContent className="h-full">
+        {items.length ? (
+          <div className="flex flex-wrap gap-4">
+            {items.map((item) => (
+              <Button
+                variant="secondary"
+                key={`${id}-${item.name.toLowerCase()}`}
+                onClick={() => handleSelect(item)}
+              >
+                {item.emoji} {item.name}
+              </Button>
+            ))}
+          </div>
+        ) : (
+          <div className="text-sm text-muted-foreground flex justify-center items-center flex-col h-full">
+            <Rabbit strokeWidth={1.25} />
+            <span>Your box is lonely.</span>
+          </div>
+        )}
       </CardContent>
     </Card>
   )
