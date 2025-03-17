@@ -71,7 +71,7 @@ export default function TodoList() {
   const { fruit, vegetable, uncategorized } = categories
 
   return (
-    <div className="flex gap-3 flex-col px-2 py-4 h-[100dvh] md:flex-row-reverse md:h-full">
+    <div className="flex gap-3 flex-col px-2 py-4 h-[100svh] md:flex-row-reverse md:h-full">
       <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
       <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
       <Block
