@@ -79,7 +79,7 @@ export default function TodoList() {
         description="Click the items in the magic box to categorize them so they will be
           temporarily grouped."
       />
-      <div className="flex gap-3 flex-col h-[100svh] px-2 py-4 md:px-0 md:flex-row-reverse md:h-full">
+      <div className="flex gap-3 flex-col h-[100svh] md:flex-row-reverse md:h-full">
         <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
         <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
         <Block

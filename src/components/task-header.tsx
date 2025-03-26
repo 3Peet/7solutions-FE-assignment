@@ -6,7 +6,7 @@ export default function TaskHeader({
   description: string
 }) {
   return (
-    <div className="px-2 space-y-1">
+    <div className="px-2 space-y-1 mb-4">
       <h2 className="text-xl font-bold ">{title}</h2>
       <p className="text-sm text-muted-foreground">{description}</p>
     </div>
