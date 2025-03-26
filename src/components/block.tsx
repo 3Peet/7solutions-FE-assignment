@@ -23,7 +23,7 @@ const Block = ({
   const id = name.replace(/ /g, '-').toLowerCase()
 
   return (
-    <Card className="h-full md:w-[400px] md:h-auto md:min-h-[400px]">
+    <Card className="h-full md:w-full md:h-auto md:min-h-[400px]">
       <CardHeader>
         <CardTitle>{name}</CardTitle>
         <CardDescription>{description}</CardDescription>

@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react'
-import { foodInfo } from '@/types/food'
-import { FOOD_DATA } from '@/constants/food'
+
 import Block from './block'
+import { FOOD_DATA } from '@/constants/food'
+import { foodInfo } from '@/types/food'
+import TaskHeader from './task-header'
 
 const TIME_OUT = 5_000 // 5 seconds
 
@@ -71,15 +73,22 @@ export default function TodoList() {
   const { fruit, vegetable, uncategorized } = categories
 
   return (
-    <div className="flex gap-3 flex-col px-2 py-4 h-[100svh] md:flex-row-reverse md:h-full">
-      <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
-      <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
-      <Block
-        name="Magic Box"
-        description={`The item will be categorized for ${TIME_OUT / 1000} seconds!`}
-        items={uncategorized}
-        handleSelect={handleSelect}
+    <>
+      <TaskHeader
+        title="1. Auto Delete Todo List"
+        description="Click the items in the magic box to categorize them so they will be
+          temporarily grouped."
       />
-    </div>
+      <div className="flex gap-3 flex-col h-[100svh] md:flex-row-reverse md:h-full">
+        <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
+        <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
+        <Block
+          name="Magic Box"
+          description={`The item will be categorized for ${TIME_OUT / 1000} seconds!`}
+          items={uncategorized}
+          handleSelect={handleSelect}
+        />
+      </div>
+    </>
   )
 }
