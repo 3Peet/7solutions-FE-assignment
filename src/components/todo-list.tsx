@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react'
-import { foodInfo } from '@/types/food'
-import { FOOD_DATA } from '@/constants/food'
+
 import Block from './block'
+import { FOOD_DATA } from '@/constants/food'
+import { foodInfo } from '@/types/food'
 
 const TIME_OUT = 5_000 // 5 seconds
 
@@ -71,7 +72,7 @@ export default function TodoList() {
   const { fruit, vegetable, uncategorized } = categories
 
   return (
-    <div className="flex gap-3 flex-col px-2 py-4 h-[100svh] md:flex-row-reverse md:h-full">
+    <div className="flex gap-3 flex-col px-2 py-4 h-[100svh] md:flex-row-reverse md:h-full md:mx-auto">
       <Block name="Fruit" items={fruit} handleSelect={handleSelect} />
       <Block name="Vegetable" items={vegetable} handleSelect={handleSelect} />
       <Block
